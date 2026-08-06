@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   name: tango-gateway
-  version: 1.2.0
+  version: 1.3.0
 
 package:
   name: ${{ name|lower }}
@@ -10,10 +10,10 @@ package:
 
 source:
   url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/tango_gateway-${{ version }}.tar.gz
-  sha256: a95de03b58469cd63d7ff0dc2db7fcd0dd5bc6ffd0f035cb90cd56d66a46142b
+  sha256: 6b983e82dabc06ed78650550ba7945ecf2e55aec5b8e8e1ac691a4211952dab0
 
 build:
-  number: 2
+  number: 0
   noarch: python
   script: ${{ PYTHON }} -m pip install . -vv
   python:
@@ -27,7 +27,7 @@ requirements:
     - setuptools
     - setuptools-scm
   run:
-    - aiozmq
+    - pyzmq
     - python >=${{ python_min }}
 
 tests:
@@ -35,7 +35,9 @@ tests:
       imports:
         - tangogateway
       pip_check: true
-      python_version: ${{ python_min }}.*
+      python_version:
+        - ${{ python_min }}.*
+        - 3.*
   - script:
       - tango-gateway --help
     requirements:
